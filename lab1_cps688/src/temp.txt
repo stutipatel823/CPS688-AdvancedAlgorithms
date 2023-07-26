@@ -1,0 +1,118 @@
+import java.util.*;
+
+public class AdjacencyList{
+    private LinkedList<Integer>[] adjList; //adjacency list to store graph
+    private int vertices; //total number of vertices
+    private int edges; //total number of edges
+    private boolean[] visited; // to track visited nodes
+
+    //constructor to initialize the graph with given number of nodes
+    public AdjacencyList(int nodes){
+        this.vertices = nodes;
+        this.edges = 0;
+        this.adjList = new LinkedList[nodes];
+        this.visited = new boolean[nodes];
+        /*initializing a linkedlist for each index */
+        for(int v = 0; v < vertices; v++){
+            adjList[v] = new LinkedList<>();
+        }
+    }
+
+    //method to add an edge between two nodes
+    public void addEdge(int a, int b){
+        adjList[a].add(b);
+        adjList[b].add(a);
+        edges++; 
+    }
+    //method to get degree of a vertex
+    public int degreeVertex(int a){
+        int size = 0;
+        for(int i : adjList[a]){
+            size++;
+        }
+        // System.out.println(size);
+        return size;
+    }
+    //method to print adjacency list representation of graph
+    public void printAllVertices(){
+        for(int i = 0; i<vertices; i++){
+            System.out.print("Vertex "+i+": ");
+            for(int j : adjList[i]){
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+    //method to print vertices(nodes) connected to the given vertix
+    public void printAdjVertices(int a){
+        System.out.print("Vertex "+ a + " is connected to: ");
+        for(int node : adjList[a]){
+            System.out.print(node+" ");
+        }
+        System.out.println();
+    }
+    
+    
+    //method to perform breadth first search starting from given node
+    public void BFS(int node) {
+        visited = new boolean[vertices]; //reset visited array
+        ArrayList<Integer> queue = new ArrayList<>(); //queue for bfs
+    
+        visited[node] = true;
+        queue.add(node);
+    
+        int index = 0;
+        while (index < queue.size()) {
+            System.out.print(index + " ");
+            for (int i : adjList[index]) {
+                if (!visited[i]) {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+            index++;
+        }
+    }
+
+    //method to perform depth first search starting from given node
+    public void DFS(int start) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(start);
+        while (!stack.isEmpty()) {
+            int vertex = stack.pop();
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                System.out.print(vertex + " ");
+                for (int i = adjacencyList[vertex].size() - 1; i >= 0; i--) {
+                    int neighbor = adjacencyList[vertex].get(i);
+                    if (!visited[neighbor]) {
+                        stack.push(neighbor);
+                    }
+                }
+            }
+        }
+    }
+    //main method to test the program
+    public static void main(String[] args){
+        AdjacencyList list = new AdjacencyList(6);
+        //adding edges to graph
+        list.addEdge(0,1);
+        list.addEdge(0,3);
+        list.addEdge(1,2);
+        list.addEdge(2,4);
+        list.addEdge(3,4);
+        list.addEdge(3,5);
+        list.printAdjVertices(2);
+        list.printAllVertices();
+        System.out.println("Vertex 0 has "+list.degreeVertex(0)+" adjaceny vertices.");
+        System.out.println("Vertex 1 has "+list.degreeVertex(1)+" adjaceny vertices.");
+        System.out.println("Vertex 2 has "+list.degreeVertex(2)+" adjaceny vertices.");
+        System.out.println("Vertex 3 has "+list.degreeVertex(3)+" adjaceny vertices.");
+        System.out.println("Vertex 4 has "+list.degreeVertex(4)+" adjaceny vertices.");
+        System.out.println("Vertex 5 has "+list.degreeVertex(5)+" adjaceny vertices.");
+        System.out.println("Depth first search: ");
+        list.DFS(0);
+        System.out.println("\nBreadth First Search: ");
+        list.BFS(0);
+    }
+}

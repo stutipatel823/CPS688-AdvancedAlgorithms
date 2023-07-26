@@ -1,0 +1,124 @@
+/*ONLINE METHOD*/
+import java.util.*;
+
+class Graph {
+    private int numVertices;
+    private LinkedList<Integer>[] adjacencyList;
+
+    Graph(int numVertices){
+        this.numVertices = numVertices;
+        adjacencyList = new LinkedList[numVertices];
+        for (int i = 0; i < numVertices; i++) {
+            adjacencyList[i] = new LinkedList<>();
+        }
+    }
+
+    void addEdge(int a, int b) {
+        adjacencyList[a].add(b);
+        adjacencyList[b].add(a);
+    }
+
+    int degreeVertex(int a) {
+        return adjacencyList[a].size();
+    }
+
+    void printAdjVertices(int a) {
+        System.out.print("Adjacent vertices of vertex " + a + ": ");
+        for (Integer vertex : adjacencyList[a]) {
+            System.out.print(vertex + " ");
+        }
+        System.out.println();
+    }
+
+    void BFS(int startVertex) {
+        boolean[] visited = new boolean[numVertices];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[startVertex] = true;
+        queue.add(startVertex);
+
+        while (!queue.isEmpty()) {
+            int vertex = queue.poll();
+            System.out.print(vertex + " ");
+            for (Integer adjVertex : adjacencyList[vertex]) {
+                if (!visited[adjVertex]) {
+                    visited[adjVertex] = true;
+                    queue.add(adjVertex);
+                }
+            }
+        }
+    }
+
+    void DFS(int startVertex, boolean[] visited) {
+        visited[startVertex] = true;
+        System.out.print(startVertex + " ");
+        for (Integer adjVertex : adjacencyList[startVertex]) {
+            if (!visited[adjVertex]) {
+                DFS(adjVertex, visited);
+            }
+        }
+    }
+
+    void printGraph(int startVertex){
+        System.out.println("BFS Output: ");
+        BFS(startVertex);
+        System.out.println();
+
+        boolean[] visited = new boolean[numVertices];
+        System.out.println("DFS Output: ");
+        DFS(startVertex, visited);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Graph graph = new Graph(30);
+    
+        // graph.addEdge(0, 1);
+        // graph.addEdge(0, 2);
+        // graph.addEdge(0, 3);
+        // graph.addEdge(1, 4);
+        // graph.addEdge(1, 5);
+        // graph.addEdge(1, 6);
+        // graph.addEdge(2, 7);
+        // graph.addEdge(2, 8);
+        // graph.addEdge(3, 9);
+        // graph.addEdge(3, 10);
+        // graph.addEdge(3, 11);
+        // graph.addEdge(3, 12);
+        // graph.addEdge(4, 13);
+        // graph.addEdge(5, 14);
+        // graph.addEdge(5, 15);
+        // graph.addEdge(6, 16);
+        // graph.addEdge(7, 17);
+        // graph.addEdge(8, 18);
+        // graph.addEdge(10, 19);
+        // graph.addEdge(12, 20);
+        // graph.addEdge(13, 21);
+        // graph.addEdge(17, 22);
+        // graph.addEdge(18, 23);
+        // graph.addEdge(18, 24);
+        // graph.addEdge(20, 25);
+        // graph.addEdge(22, 28);
+        // graph.addEdge(25, 26);
+        // graph.addEdge(26, 27);
+        // graph.addEdge(27, 29);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 3);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 4);
+        graph.addEdge(3, 5);
+    
+    
+//        graph.printAdjVertices(0);
+        
+        System.out.println("BFS Output: ");
+        graph.BFS(0);
+        System.out.println();
+    
+        System.out.println("\nDFS Output: ");
+        graph.DFS(0, new boolean[30]);
+        System.out.println();
+    }
+    
+}

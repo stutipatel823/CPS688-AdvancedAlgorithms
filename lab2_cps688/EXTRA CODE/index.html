@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4x4 Queens Backtracking</title>
+    <link rel="stylesheet" href="queens.css">
+  </head>
+  <body>
+    <h1>4x4 Queens Backtracking</h1>
+    <div id="board">
+      <table>
+        <tr>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+        </tr>
+        <tr>
+          <td>X</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <div id="steps">
+      <h2>Steps:</h2>
+      <ol>
+        <li>Place queen in row 1, column 1</li>
+        <li>Cannot place queen in row 2, column 2</li>
+        <li>Place queen in row 3, column 2</li>
+        <li>Cannot place queen in row 4, column 4</li>
+        <li>Backtrack to row 3, column 1</li>
+        <li>Place queen in row 4, column 3</li>
+        <li>Solution found!</li>
+      </ol>
+    </div>
+  </body>
+</html>
